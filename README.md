@@ -18,7 +18,7 @@ MindTrack does not rely on external cloud APIs (like OpenAI) to ensure complete 
 
 1. Navigate to the `backend` folder:
    ```bash
-   cd d:\Workspace\Projects\MindTrack\backend
+   cd backend
    ```
 2. Create a `.env` file (if it doesn't exist) and add the following keys:
    ```env
@@ -49,7 +49,7 @@ MindTrack uses Docker to run a local PostgreSQL instance cleanly.
 
 1. Open a terminal in the root project directory:
    ```bash
-   cd d:\Workspace\Projects\MindTrack
+   # Make sure you are in the root directory of the repository
    ```
 2. Ensure Docker Desktop is open and running on your machine.
 3. Start the database container in the background:
@@ -64,7 +64,7 @@ MindTrack uses Docker to run a local PostgreSQL instance cleanly.
 
 1. Open a new terminal and navigate to the backend directory:
    ```bash
-   cd d:\Workspace\Projects\MindTrack\backend
+   cd backend
    ```
 2. Create and activate a Python virtual environment:
    ```bash
@@ -97,7 +97,7 @@ MindTrack uses Docker to run a local PostgreSQL instance cleanly.
 
 1. Open a **third** terminal and navigate to the frontend directory:
    ```bash
-   cd d:\Workspace\Projects\MindTrack\frontend
+   cd frontend
    ```
 2. Install the Node modules:
    ```bash

@@ -5,6 +5,19 @@ from app.models.support import AlertPriority, AlertStatus, InterventionStatus
 
 # --- ALERTS ---
 
+class StudentUserResponse(BaseModel):
+    first_name: str
+    last_name: str
+
+    class Config:
+        from_attributes = True
+
+class AlertStudentResponse(BaseModel):
+    user: StudentUserResponse
+
+    class Config:
+        from_attributes = True
+
 class AlertResponse(BaseModel):
     id: int
     student_id: int
@@ -13,6 +26,7 @@ class AlertResponse(BaseModel):
     reason: str
     created_at: datetime
     resolved_at: Optional[datetime]
+    student: Optional[AlertStudentResponse] = None
 
     class Config:
         from_attributes = True

@@ -94,7 +94,7 @@ export default function CounselorDashboard() {
                     <AlertCircle color={alert.priority === 'HIGH' ? '#e74c3c' : 'var(--accent-secondary)'} size={24} />
                   </div>
                   <div style={styles.alertContent}>
-                    <h3 style={styles.alertName}>{alert.student?.first_name} {alert.student?.last_name}</h3>
+                    <h3 style={styles.alertName}>{alert.student?.user?.first_name} {alert.student?.user?.last_name}</h3>
                     <p style={styles.alertReason}>{alert.reason}</p>
                   </div>
                   <div style={styles.alertMeta}>

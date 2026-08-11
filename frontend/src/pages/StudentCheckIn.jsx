@@ -99,7 +99,7 @@ export default function StudentCheckIn() {
         </div>
         
         <h2 style={styles.questionText}>
-          {q.text}
+          {q.question_text}
         </h2>
 
         <div style={styles.sliderContainer}>

@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Instrument+Serif:ital@0;1&display=swap');
+
+:root {
+  /* Colors */
+  --bg-primary: #F4F1EA;
+  --text-primary: #171717;
+  --text-secondary: #68645D;
+  --accent-primary: #6E8B74;
+  --accent-secondary: #D8A96B;
+  
+  --bg-surface: #EAE6DB; /* Slightly darker for neomorphic inset */
+  --bg-surface-light: #FDFBF7; /* Slightly lighter for neomorphic popup */
+
+  /* Typography */
+  --font-sans: 'DM Sans', sans-serif;
+  --font-serif: 'Instrument Serif', serif;
+
+  /* Neumorphic Shadows */
+  --neo-shadow: 4px 4px 10px rgba(0,0,0,0.05), -4px -4px 10px rgba(255,255,255,0.8);
+  --neo-inset: inset 4px 4px 10px rgba(0,0,0,0.05), inset -4px -4px 10px rgba(255,255,255,0.8);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  overflow-x: hidden;
+  /* hide default cursor on desktop for custom cursor */
+  cursor: none; 
+}
+
+@media (max-width: 768px) {
+  body {
+    cursor: auto; /* show cursor on mobile */
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Utilities */
+.editorial {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.neomorphic {
+  background: var(--bg-primary);
+  box-shadow: var(--neo-shadow);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.neomorphic-inset {
+  background: var(--bg-primary);
+  box-shadow: var(--neo-inset);
+  border-radius: 12px;
+}
+
+/* Lenis styles */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Custom Cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  background-color: var(--text-primary);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+  mix-blend-mode: difference;
+}
+
+.custom-cursor.active {
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border: 1px solid var(--bg-primary);
+}
+
+@media (max-width: 768px) {
+  .custom-cursor {
+    display: none;
+  }
+}
+

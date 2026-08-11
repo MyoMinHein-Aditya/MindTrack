@@ -20,27 +20,6 @@ MindTrack does not rely on external cloud APIs (like OpenAI) to ensure complete 
    ```bash
    cd backend
    ```
-2. Create a `.env` file (if it doesn't exist) and add the following keys:
-   ```env
-   # PostgreSQL Database Configuration
-   POSTGRES_USER=mindtrack
-   POSTGRES_PASSWORD=mindtrackpassword
-   POSTGRES_DB=mindtrack_db
-   
-   # Connection string used by SQLAlchemy
-   DATABASE_URL=postgresql://mindtrack:mindtrackpassword@localhost:5432/mindtrack_db
-
-   # Authentication Security (JWT)
-   JWT_SECRET_KEY=09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7
-   JWT_ALGORITHM=HS256
-   ACCESS_TOKEN_EXPIRE_MINUTES=1440
-
-   # CORS Configuration
-   BACKEND_CORS_ORIGINS=["http://localhost:5173"]
-   ```
-
-*(Note: In a production environment, generate a strong random `SECRET_KEY` and do not commit the `.env` file to version control).*
-
 ---
 
 ## 2. Start the Database (PostgreSQL)
@@ -73,7 +52,7 @@ MindTrack uses Docker to run a local PostgreSQL instance cleanly.
    # On Windows:
    venv\Scripts\activate
    # On macOS/Linux:
-   # source venv/bin/activate
+   source venv/bin/activate
    ```
 3. Install the dependencies:
    ```bash

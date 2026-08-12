@@ -1,5 +1,15 @@
 # MindTrack - SIH Prototype Setup Guide
 
+**Team Name:** GammaRay
+
+**Team Members** 
+1. Swati Pal
+2. Kalpataru Das
+3. Aditya Bajoria
+4. Divyam Tiwari
+5. Jainish Baria
+6. Bhargav Chowdhary
+
 This guide provides step-by-step instructions to run the MindTrack Smart India Hackathon prototype locally on your machine.
 
 ---

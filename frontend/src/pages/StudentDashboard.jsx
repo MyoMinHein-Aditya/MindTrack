@@ -134,6 +134,25 @@ const StudentDashboard = () => {
                       New Check-in
                     </MagneticButton>
                   </Link>
+                  <Link to="/student/resources" style={{ marginLeft: '1rem' }}>
+                    <MagneticButton 
+                      className="neomorphic"
+                      style={{
+                        padding: '1rem 2rem',
+                        background: 'transparent',
+                        color: 'var(--text-primary)',
+                        border: '1px solid var(--text-primary)',
+                        borderRadius: '8px',
+                        fontSize: '1rem',
+                        cursor: 'pointer',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.5rem'
+                      }}
+                    >
+                      Resource Hub
+                    </MagneticButton>
+                  </Link>
                 </div>
               </div>
             </div>

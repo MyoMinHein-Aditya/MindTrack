@@ -14,6 +14,7 @@ import Register from './pages/Register';
 import AdminDashboard from './pages/AdminDashboard';
 import StudentDashboard from './pages/StudentDashboard';
 import StudentCheckIn from './pages/StudentCheckIn';
+import ResourceHub from './pages/ResourceHub';
 import CounselorDashboard from './pages/CounselorDashboard';
 
 function App() {
@@ -48,6 +49,13 @@ function App() {
               element={
                 <ProtectedRoute allowedRoles={['STUDENT']}>
                   <StudentCheckIn />
+              } 
+            />
+            <Route 
+              path="/student/resources" 
+              element={
+                <ProtectedRoute allowedRoles={['STUDENT']}>
+                  <ResourceHub />
                 </ProtectedRoute>
               } 
             />

@@ -58,6 +58,21 @@ def get_school_analytics(
     """Aggregate analytics for administrators (privacy-preserving)."""
     school_id = current_user.school_id
     
+    # Counts for setup progress
+    counselor_count = db.query(User).filter(User.school_id == school_id, User.role == "COUNSELOR").count()
+    teacher_count = db.query(User).filter(User.school_id == school_id, User.role == "TEACHER").count()
+    student_count = db.query(User).filter(User.school_id == school_id, User.role == "STUDENT").count()
+
+    # Participation
+    # Students who have at least 1 check-in
+    participating_students = db.query(Student.id).join(Assessment).join(User).filter(
+        User.school_id == school_id
+    ).distinct().count()
+
+    participation_rate = 0
+    if student_count > 0:
+        participation_rate = round((participating_students / student_count) * 100)
+
     # Average wellbeing score across school
     avg_score = db.query(func.avg(WellbeingScore.total_score)).join(Assessment).join(Student).join(User).filter(
         User.school_id == school_id
@@ -69,7 +84,9 @@ def get_school_analytics(
         InterventionAssignment.status == InterventionStatus.COMPLETED
     ).count()
     
-    # Count of students in each category (requires group by in real app, simplified here)
+    # Most reported factor (simplified: find factor with most negative score changes across school)
+    # Since factor analysis isn't fully robust in this prototype yet, we can mock it based on raw data or leave empty if zero
+    
     thriving = db.query(WellbeingScore).join(Assessment).join(Student).join(User).filter(
         User.school_id == school_id, WellbeingScore.category_label == "Thriving"
     ).count()
@@ -79,6 +96,16 @@ def get_school_analytics(
     ).count()
 
     return {
+        "setup_progress": {
+            "counselors": counselor_count,
+            "teachers": teacher_count,
+            "students": student_count
+        },
+        "participation": {
+            "participating_students": participating_students,
+            "total_students": student_count,
+            "rate": participation_rate
+        },
         "average_wellbeing_score": round(avg_score, 1) if avg_score else None,
         "interventions_completed": interventions_completed,
         "distribution": {

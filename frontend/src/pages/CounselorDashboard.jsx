@@ -57,55 +57,69 @@ export default function CounselorDashboard() {
       {/* Main Content */}
       <main style={styles.main}>
         <header style={styles.header}>
-          <h1 style={styles.h1}>Welcome, Dr. {user?.last_name || 'Counselor'}</h1>
-          <p style={styles.subtitle}>Here is your overview for Demo High School.</p>
+          <h1 className="editorial" style={styles.h1}>Good morning, {user?.first_name || 'Counselor'}.</h1>
+          <p style={styles.subtitle}>Here is your overview.</p>
         </header>
 
-        {/* Stats Grid */}
-        <div style={styles.statsGrid}>
-          <div className="neomorphic" style={styles.statCard}>
-            <div style={styles.statLabel}>Students Monitored</div>
-            <div style={styles.statValue}>{stats.students_monitored}</div>
+        {stats.students_monitored === 0 ? (
+          <div className="neomorphic-inset" style={{ padding: '4rem 2rem', textAlign: 'center', marginTop: '2rem' }}>
+             <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>No students yet.</h3>
+             <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>
+               Add students to begin monitoring well-being.
+             </p>
           </div>
-          <div className="neomorphic" style={styles.statCard}>
-            <div style={styles.statLabel}>Active Alerts</div>
-            <div style={styles.statValue}>{stats.active_alerts}</div>
-          </div>
-          <div className="neomorphic" style={styles.statCard}>
-            <div style={styles.statLabel}>Check-ins this week</div>
-            <div style={styles.statValue}>{stats.checkins_this_week}</div>
-          </div>
-        </div>
+        ) : (
+          <>
+            {/* Stats Grid */}
+            <div style={styles.statsGrid}>
+              <div className="neomorphic" style={styles.statCard}>
+                <div style={styles.statLabel}>Students Monitored</div>
+                <div style={styles.statValue}>{stats.students_monitored}</div>
+              </div>
+              <div className="neomorphic" style={styles.statCard}>
+                <div style={styles.statLabel}>Active Alerts</div>
+                <div style={styles.statValue}>{stats.active_alerts}</div>
+              </div>
+              <div className="neomorphic" style={styles.statCard}>
+                <div style={styles.statLabel}>Check-ins this week</div>
+                <div style={styles.statValue}>{stats.checkins_this_week}</div>
+              </div>
+            </div>
 
-        {/* Alerts Section */}
-        <section style={styles.alertsSection}>
-          <div style={styles.sectionHeader}>
-            <h2 style={styles.h2}>Trend Engine Alerts</h2>
-            {alerts.length > 0 && <span style={styles.badge}>{alerts.length} Requires Action</span>}
-          </div>
-          
-          <div style={styles.alertsList}>
-            {alerts.length === 0 ? (
-              <p style={{color: 'var(--text-secondary)'}}>No active alerts.</p>
-            ) : (
-              alerts.map(alert => (
-                <div key={alert.id} className="neomorphic" style={styles.alertItem}>
-                  <div style={styles.alertIcon}>
-                    <AlertCircle color={alert.priority === 'HIGH' ? '#e74c3c' : 'var(--accent-secondary)'} size={24} />
+            {/* Alerts Section */}
+            <section style={styles.alertsSection}>
+              <div style={styles.sectionHeader}>
+                <h2 style={styles.h2}>Alerts & Trends</h2>
+                {alerts.length > 0 && <span style={styles.badge}>{alerts.length} Requires Action</span>}
+              </div>
+              
+              <div style={styles.alertsList}>
+                {alerts.length === 0 ? (
+                  <div className="neomorphic-inset" style={{ padding: '3rem 2rem', textAlign: 'center' }}>
+                    <p style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>You're all caught up.</p>
+                    <p style={{ color: 'var(--text-secondary)' }}>Nothing needs your attention right now.</p>
                   </div>
-                  <div style={styles.alertContent}>
-                    <h3 style={styles.alertName}>{alert.student?.user?.first_name} {alert.student?.user?.last_name}</h3>
-                    <p style={styles.alertReason}>{alert.reason}</p>
-                  </div>
-                  <div style={styles.alertMeta}>
-                    <span style={styles.alertDate}>{new Date(alert.created_at).toLocaleDateString()}</span>
-                    <button style={styles.btnAction}>Review</button>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        </section>
+                ) : (
+                  alerts.map(alert => (
+                    <div key={alert.id} className="neomorphic" style={styles.alertItem}>
+                      <div style={styles.alertIcon}>
+                        <AlertCircle color={alert.priority === 'HIGH' || alert.priority === 'PRIORITY' ? '#e74c3c' : 'var(--accent-secondary)'} size={24} />
+                      </div>
+                      <div style={styles.alertContent}>
+                        <h3 style={styles.alertName}>{alert.student?.user?.first_name} {alert.student?.user?.last_name}</h3>
+                        <p style={styles.alertReason}>{alert.reason}</p>
+                      </div>
+                      <div style={styles.alertMeta}>
+                        <span style={styles.alertDate}>{new Date(alert.created_at).toLocaleDateString()}</span>
+                        <button style={styles.btnAction}>Review</button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </section>
+          </>
+        )}
       </main>
     </div>
   );

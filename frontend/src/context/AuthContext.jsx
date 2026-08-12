@@ -51,6 +51,17 @@ export function AuthProvider({ children }) {
     return userData;
   };
 
+  const registerSchool = async (schoolData, adminData) => {
+    // 1. Register the school and admin
+    await axios.post('http://localhost:8000/api/auth/register/school', {
+      school: schoolData,
+      admin: adminData
+    });
+    
+    // 2. Automatically log them in after registration
+    return login(adminData.email, adminData.password);
+  };
+
   const logout = () => {
     setUser(null);
     localStorage.removeItem('token');
@@ -61,7 +72,7 @@ export function AuthProvider({ children }) {
   if (loading) return null;
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, registerSchool, logout }}>
       {children}
     </AuthContext.Provider>
   );

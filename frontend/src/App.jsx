@@ -7,7 +7,11 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 // Pages
 import Landing from './pages/Landing';
+import GetStarted from './pages/GetStarted';
 import Login from './pages/Login';
+import Register from './pages/Register';
+import AdminDashboard from './pages/AdminDashboard';
+import StudentDashboard from './pages/StudentDashboard';
 import StudentCheckIn from './pages/StudentCheckIn';
 import CounselorDashboard from './pages/CounselorDashboard';
 
@@ -19,7 +23,25 @@ function App() {
           <CustomCursor />
           <Routes>
             <Route path="/" element={<Landing />} />
+            <Route path="/get-started" element={<GetStarted />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route 
+              path="/admin/dashboard" 
+              element={
+                <ProtectedRoute allowedRoles={['ADMIN']}>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/student/dashboard" 
+              element={
+                <ProtectedRoute allowedRoles={['STUDENT']}>
+                  <StudentDashboard />
+                </ProtectedRoute>
+              } 
+            />
             <Route 
               path="/student/check-in" 
               element={

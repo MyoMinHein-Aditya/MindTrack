@@ -1,217 +1,175 @@
 import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, Activity, ShieldCheck, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import PageTransition from '../components/motion/PageTransition';
+import TextReveal from '../components/motion/TextReveal';
+import MagneticButton from '../components/motion/MagneticButton';
+import { ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Landing() {
-  const heroRef = useRef(null);
-  const titleRef = useRef(null);
-  const subtitleRef = useRef(null);
-  const ctaRef = useRef(null);
+const Landing = () => {
+  const problemRef = useRef(null);
+  const indicatorRef = useRef(null);
 
   useEffect(() => {
-    const tl = gsap.timeline();
-    
-    tl.fromTo(titleRef.current, 
+    // Problem Section Parallax
+    gsap.fromTo(problemRef.current, 
       { y: 100, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2, ease: "power4.out", delay: 0.2 }
-    )
-    .fromTo(subtitleRef.current,
-      { y: 50, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
-      "-=0.8"
-    )
-    .fromTo(ctaRef.current,
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
-      "-=0.6"
+      {
+        y: 0,
+        opacity: 1,
+        scrollTrigger: {
+          trigger: problemRef.current,
+          start: "top 80%",
+          end: "top 30%",
+          scrub: 1
+        }
+      }
     );
 
-    // Parallax hero effect
-    gsap.to(heroRef.current, {
-      yPercent: 30,
-      ease: "none",
+    // Dynamic Indicator Animation
+    const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: heroRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: true
+        trigger: indicatorRef.current,
+        start: "top center",
+        end: "bottom center",
+        scrub: 1,
+        pin: true
       }
     });
+
+    tl.to(".indicator-bar", { width: "40%", backgroundColor: "#D8A96B", duration: 1 })
+      .to(".indicator-text", { opacity: 0, duration: 0.2 }, "<")
+      .to(".indicator-text-new", { opacity: 1, duration: 0.2 }, ">")
+      .to(".indicator-bar", { width: "20%", backgroundColor: "#D32F2F", duration: 1 })
+      .to(".notice-text", { opacity: 1, y: 0, duration: 1 });
 
   }, []);
 
   return (
-    <main style={{ minHeight: '200vh' }}>
-      {/* Navigation */}
-      <nav style={styles.nav}>
-        <div style={styles.logo}>MINDTRACK</div>
-        <div style={styles.navLinks}>
-          <Link to="/counselor/dashboard">Counselor Portal</Link>
-          <Link to="/student/check-in" style={styles.btnOutline}>Student Check-In</Link>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <section ref={heroRef} style={styles.hero}>
-        <div className="container" style={styles.heroContent}>
-          <h1 ref={titleRef} style={styles.h1}>
-            <span className="editorial">Early insight.</span><br/>
-            Timely support.<br/>
-            <span className="editorial">Better well-being.</span>
-          </h1>
-          
-          <p ref={subtitleRef} style={styles.subtitle}>
-            A privacy-first, web-based student well-being assessment, longitudinal tracking, and early-warning platform for schools.
-          </p>
-
-          <div ref={ctaRef} style={styles.ctaGroup}>
-            <Link to="/login?redirect=/student/check-in" style={styles.btnPrimary}>
-              I'm a Student
-            </Link>
-            <Link to="/login?redirect=/counselor/dashboard" style={styles.btnSecondary}>
-              I'm a Counselor
-            </Link>
+    <PageTransition>
+      <div style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
+        
+        {/* Navigation */}
+        <nav className="container" style={{ display: 'flex', justifyContent: 'space-between', padding: '2rem 0', position: 'absolute', top: 0, left: 0, right: 0, zIndex: 10 }}>
+          <div className="editorial" style={{ fontSize: '1.5rem', color: 'var(--text-secondary)' }}>
+            MindTrack.
           </div>
-        </div>
-      </section>
+          <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+            <Link to="/login" style={{ fontSize: '0.95rem', fontWeight: 500, color: 'var(--text-secondary)' }}>Sign in</Link>
+            <Link to="/get-started" style={{ fontSize: '0.95rem', fontWeight: 500, color: 'var(--text-primary)', borderBottom: '1px solid var(--text-primary)', paddingBottom: '2px' }}>Get started</Link>
+          </div>
+        </nav>
 
-      {/* Value Props Section */}
-      <section style={styles.featuresSection}>
-        <div className="container" style={styles.featuresGrid}>
-          <div className="neomorphic" style={styles.featureCard}>
-            <Activity size={32} color="var(--accent-primary)" />
-            <h3 style={styles.cardTitle}>Longitudinal Tracking</h3>
-            <p style={styles.cardText}>Track nuanced changes across 7 critical well-being factors over time, moving beyond simple static scores.</p>
+        {/* Hero Section */}
+        <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '5rem' }}>
+          <div className="container" style={{ textAlign: 'center', maxWidth: '800px' }}>
+            <TextReveal delay={0.2}>
+              <h1 style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', lineHeight: 1.1, letterSpacing: '-0.03em', marginBottom: '1.5rem' }}>
+                Understand well-being<br />before it becomes a crisis.
+              </h1>
+            </TextReveal>
+            
+            <TextReveal delay={0.4}>
+              <p style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem auto', lineHeight: 1.6 }}>
+                MindTrack helps schools notice meaningful changes early, coordinate human support, and track outcomes — without turning emotional data into a surveillance system.
+              </p>
+            </TextReveal>
+            
+            <TextReveal delay={0.6}>
+              <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', alignItems: 'center' }}>
+                <Link to="/get-started">
+                  <MagneticButton 
+                    className="neomorphic"
+                    style={{
+                      padding: '1.25rem 2.5rem',
+                      background: 'var(--text-primary)',
+                      color: 'var(--bg-primary)',
+                      border: 'none',
+                      borderRadius: '8px',
+                      fontSize: '1rem',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.75rem'
+                    }}
+                  >
+                    Get started <ArrowRight size={18} />
+                  </MagneticButton>
+                </Link>
+                <Link to="/login" style={{ fontSize: '1rem', color: 'var(--text-secondary)', padding: '1rem' }}>
+                  Sign in
+                </Link>
+              </div>
+            </TextReveal>
           </div>
-          
-          <div className="neomorphic" style={styles.featureCard}>
-            <TrendingUp size={32} color="var(--accent-secondary)" />
-            <h3 style={styles.cardTitle}>Trend Engine Alerts</h3>
-            <p style={styles.cardText}>Automated early-warnings detect sudden drops or sustained declines, prioritizing counselor intervention.</p>
-          </div>
+        </section>
 
-          <div className="neomorphic" style={styles.featureCard}>
-            <ShieldCheck size={32} color="var(--text-primary)" />
-            <h3 style={styles.cardTitle}>Privacy First</h3>
-            <p style={styles.cardText}>No microphones. No cameras. No social media scraping. Opt-in assessments with strict school data boundaries.</p>
+        {/* The Problem Section */}
+        <section style={{ padding: '10rem 0', backgroundColor: 'var(--bg-surface)' }}>
+          <div className="container">
+            <div ref={problemRef} style={{ maxWidth: '800px', margin: '0 auto' }}>
+              <h2 className="editorial" style={{ fontSize: 'clamp(2.5rem, 4vw, 4rem)', lineHeight: 1.2, color: 'var(--text-secondary)', marginBottom: '2rem' }}>
+                Most problems don't begin as emergencies. They begin as subtle shifts in sleep, academic pressure, and social connection.
+              </h2>
+              <p style={{ fontSize: '1.25rem', lineHeight: 1.6 }}>
+                By the time a student asks for help, the pattern has often been running for weeks. We built a way to see the pattern forming, respectfully.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+
+        {/* Dynamic Visualization Section */}
+        <section ref={indicatorRef} style={{ height: '100vh', display: 'flex', alignItems: 'center', backgroundColor: 'var(--bg-primary)', overflow: 'hidden' }}>
+          <div className="container" style={{ width: '100%' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+              
+              <div>
+                <h3 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', letterSpacing: '-0.02em' }}>
+                  A simple check-in.
+                </h3>
+                <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '3rem' }}>
+                  Students complete a tactile, one-minute check-in weekly. MindTrack silently tracks the longitudinal delta.
+                </p>
+                <h3 className="notice-text" style={{ fontSize: '2.5rem', letterSpacing: '-0.02em', opacity: 0, transform: 'translateY(20px)' }}>
+                  MindTrack notices<br/>the pattern.
+                </h3>
+              </div>
+
+              <div className="neomorphic" style={{ padding: '3rem', position: 'relative' }}>
+                <div style={{ marginBottom: '2rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                    <span>Sleep Quality</span>
+                    <div style={{ position: 'relative', width: '50px', height: '20px' }}>
+                      <span className="indicator-text" style={{ position: 'absolute', right: 0 }}>Stable</span>
+                      <span className="indicator-text-new" style={{ position: 'absolute', right: 0, opacity: 0, color: '#D32F2F' }}>Declining</span>
+                    </div>
+                  </div>
+                  <div style={{ width: '100%', height: '8px', backgroundColor: 'rgba(0,0,0,0.05)', borderRadius: '4px', overflow: 'hidden' }}>
+                    <div className="indicator-bar" style={{ width: '75%', height: '100%', backgroundColor: 'var(--accent-primary)', borderRadius: '4px' }}></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                    <span>Academic Pressure</span>
+                    <span>High</span>
+                  </div>
+                  <div style={{ width: '100%', height: '8px', backgroundColor: 'rgba(0,0,0,0.05)', borderRadius: '4px', overflow: 'hidden' }}>
+                    <div style={{ width: '85%', height: '100%', backgroundColor: '#D8A96B', borderRadius: '4px' }}></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </PageTransition>
   );
-}
-
-const styles = {
-  nav: {
-    position: 'fixed',
-    top: 0,
-    width: '100%',
-    padding: '1.5rem 2rem',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    zIndex: 100,
-    mixBlendMode: 'difference',
-    color: '#F4F1EA' // Always light so difference makes it contrast against light bg
-  },
-  logo: {
-    fontWeight: 700,
-    letterSpacing: '0.1em',
-    fontSize: '0.9rem'
-  },
-  navLinks: {
-    display: 'flex',
-    gap: '2rem',
-    alignItems: 'center',
-    fontSize: '0.9rem',
-    fontWeight: 500
-  },
-  hero: {
-    height: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    paddingTop: '5rem',
-    position: 'relative',
-    overflow: 'hidden'
-  },
-  heroContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '2rem'
-  },
-  h1: {
-    fontSize: 'clamp(4rem, 8vw, 8rem)',
-    lineHeight: 0.9,
-    letterSpacing: '-0.03em',
-    margin: 0
-  },
-  subtitle: {
-    fontSize: 'clamp(1.1rem, 2vw, 1.5rem)',
-    color: 'var(--text-secondary)',
-    maxWidth: '600px',
-    lineHeight: 1.4
-  },
-  ctaGroup: {
-    display: 'flex',
-    gap: '1.5rem',
-    marginTop: '2rem',
-    flexWrap: 'wrap'
-  },
-  btnPrimary: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.5rem',
-    backgroundColor: 'var(--text-primary)',
-    color: 'var(--bg-primary)',
-    padding: '1rem 2rem',
-    borderRadius: '30px',
-    fontWeight: 500,
-    fontSize: '1rem'
-  },
-  btnSecondary: {
-    display: 'flex',
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-    color: 'var(--text-primary)',
-    border: '1px solid var(--text-primary)',
-    padding: '1rem 2rem',
-    borderRadius: '30px',
-    fontWeight: 500,
-    fontSize: '1rem'
-  },
-  btnOutline: {
-    border: '1px solid currentColor',
-    padding: '0.5rem 1rem',
-    borderRadius: '20px'
-  },
-  featuresSection: {
-    padding: '8rem 0',
-    backgroundColor: 'var(--bg-primary)',
-    position: 'relative',
-    zIndex: 2
-  },
-  featuresGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: '2rem'
-  },
-  featureCard: {
-    padding: '3rem 2rem',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1rem'
-  },
-  cardTitle: {
-    fontSize: '1.5rem',
-    fontWeight: 500,
-    marginTop: '1rem'
-  },
-  cardText: {
-    color: 'var(--text-secondary)',
-    lineHeight: 1.6
-  }
 };
+
+export default Landing;

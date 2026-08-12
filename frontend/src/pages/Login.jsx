@@ -27,8 +27,9 @@ export default function Login() {
       if (searchParams.get('redirect')) {
          navigate(redirectUrl);
       } else {
-         if (user.role === 'STUDENT') navigate('/student/check-in');
+         if (user.role === 'STUDENT') navigate('/student/dashboard');
          else if (user.role === 'COUNSELOR') navigate('/counselor/dashboard');
+         else if (user.role === 'ADMIN') navigate('/admin/dashboard');
          else navigate('/'); // fallback
       }
     } catch (err) {

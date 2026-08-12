@@ -22,21 +22,26 @@ def analyze_trends(db: Session, student_id: int):
     
     alert_created = False
 
-    # Rule 3: PRIORITY REVIEW (Large sustained decline)
-    if change <= -15 or latest < 40:
-        create_alert(db, student_id, AlertPriority.PRIORITY, f"Large decline of {change:.1f} points or score in significant concern range.")
+    # PRIORITY REVIEW: Sudden massive drop
+    if change <= -20 or latest < 35:
+        create_alert(db, student_id, AlertPriority.PRIORITY, f"Sudden significant drop of {abs(change):.1f} points.")
         alert_created = True
 
-    # Rule 2: FOLLOW-UP RECOMMENDED (Multiple declining indicators / consecutive decline)
-    elif len(recent) >= 3:
+    # FOLLOW-UP RECOMMENDED: 3 consecutive declines
+    elif len(recent) >= 4:
         prev2 = recent[2].wellbeing_score.total_score
-        if latest < previous and previous < prev2:
-            create_alert(db, student_id, AlertPriority.FOLLOW_UP, "Consistent decline observed across multiple recent assessments.")
-            alert_created = True
+        prev3 = recent[3].wellbeing_score.total_score
+        
+        # 3 declines: prev3 -> prev2 -> previous -> latest
+        if latest < previous and previous < prev2 and prev2 < prev3:
+            total_drop = prev3 - latest
+            if total_drop >= 10:  # Threshold
+                create_alert(db, student_id, AlertPriority.FOLLOW_UP, "Sustained change across recent check-ins.")
+                alert_created = True
 
-    # Rule 1: OBSERVATION (Small change)
-    elif change <= -8 and not alert_created:
-        create_alert(db, student_id, AlertPriority.OBSERVATION, f"Small but notable decline of {change:.1f} points observed.")
+    # OBSERVATION (Small change, Optional)
+    elif change <= -12 and not alert_created:
+        create_alert(db, student_id, AlertPriority.OBSERVATION, "Recent check-in was notably lower than previous.")
         
     db.commit()
 

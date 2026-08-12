@@ -2,6 +2,19 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional
 from app.models.core import RoleEnum
 
+class SchoolBase(BaseModel):
+    name: str
+    address: Optional[str] = None
+
+class SchoolCreate(SchoolBase):
+    pass
+
+class SchoolResponse(SchoolBase):
+    id: int
+    
+    class Config:
+        from_attributes = True
+
 class UserBase(BaseModel):
     email: EmailStr
     first_name: str
@@ -11,6 +24,10 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: str
+
+class SchoolAdminRegisterRequest(BaseModel):
+    school: SchoolCreate
+    admin: UserCreate
 
 class UserResponse(UserBase):
     id: int

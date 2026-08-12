@@ -4,6 +4,7 @@ import SmoothScroll from './components/motion/SmoothScroll';
 import CustomCursor from './components/motion/CustomCursor';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import MindBridgeChat from './components/Chat/MindBridgeChat';
 
 // Pages
 import Landing from './pages/Landing';
@@ -59,6 +60,7 @@ function App() {
               } 
             />
           </Routes>
+          <MindBridgeChat />
         </SmoothScroll>
       </Router>
     </AuthProvider>

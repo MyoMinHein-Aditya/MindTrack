@@ -22,7 +22,7 @@ if settings.BACKEND_CORS_ORIGINS:
     )
 
 from app.api import auth, assessment, counselor, intervention, analytics
-from app.api.endpoints import checkins
+from app.api.endpoints import checkins, chat
 
 @app.get("/")
 def read_root():
@@ -34,6 +34,7 @@ app.include_router(counselor.router, prefix="/api/counselor", tags=["counselor"]
 app.include_router(intervention.router, prefix="/api/interventions", tags=["interventions"])
 app.include_router(analytics.router, prefix="/api/analytics", tags=["analytics"])
 app.include_router(checkins.router, prefix="/api/checkins", tags=["checkins"])
+app.include_router(chat.router, prefix="/api/chat", tags=["chat"])
 
 
 

@@ -49,6 +49,7 @@ function App() {
               element={
                 <ProtectedRoute allowedRoles={['STUDENT']}>
                   <StudentCheckIn />
+                </ProtectedRoute>
               } 
             />
             <Route 

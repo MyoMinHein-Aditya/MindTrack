@@ -58,6 +58,8 @@ class Student(Base):
     user_id = Column(Integer, ForeignKey("users.id"), unique=True)
     class_id = Column(Integer, ForeignKey("classes.id"))
     consent_given = Column(Boolean, default=False)
+    streak_count = Column(Integer, default=0)
+    points = Column(Integer, default=0)
     
     user = relationship("User", back_populates="student_profile")
     school_class = relationship("Class", back_populates="students")

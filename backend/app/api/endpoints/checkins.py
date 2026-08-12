@@ -32,6 +32,16 @@ def create_checkin(
     )
     
     db.add(new_checkin)
+    
+    # Gamification: Update streak and points
+    if student.streak_count is None:
+        student.streak_count = 0
+    if student.points is None:
+        student.points = 0
+        
+    student.streak_count += 1
+    student.points += 10 # 10 points per check-in
+    
     db.commit()
     db.refresh(new_checkin)
     

@@ -57,10 +57,34 @@ const StudentDashboard = () => {
         </div>
 
         <div className="container" style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <header style={{ marginBottom: '4rem' }}>
-            <h1 className="editorial" style={{ fontSize: '2.5rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
-              How are you feeling?
-            </h1>
+          <header style={{ marginBottom: '4rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+            <div>
+              <h1 className="editorial" style={{ fontSize: '2.5rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
+                How are you feeling?
+              </h1>
+            </div>
+            
+            {/* Gamification Stats */}
+            {user?.student_profile && (
+              <div style={{ display: 'flex', gap: '2rem' }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '2rem', fontWeight: 600, color: 'var(--accent-primary)' }}>
+                    🔥 {user.student_profile.streak_count}
+                  </div>
+                  <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Week Streak
+                  </div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '2rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+                    ⭐ {user.student_profile.points}
+                  </div>
+                  <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Points
+                  </div>
+                </div>
+              </div>
+            )}
           </header>
 
           {history.length === 0 ? (

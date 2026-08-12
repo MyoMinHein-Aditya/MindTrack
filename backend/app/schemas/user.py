@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional
+from typing import Optional, Any
 from app.models.core import RoleEnum
 
 class SchoolBase(BaseModel):
@@ -29,9 +29,18 @@ class SchoolAdminRegisterRequest(BaseModel):
     school: SchoolCreate
     admin: UserCreate
 
+class StudentProfileBase(BaseModel):
+    id: int
+    streak_count: int = 0
+    points: int = 0
+
+    class Config:
+        from_attributes = True
+
 class UserResponse(UserBase):
     id: int
     is_active: bool
+    student_profile: Optional[StudentProfileBase] = None
 
     class Config:
         from_attributes = True

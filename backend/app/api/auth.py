@@ -11,6 +11,12 @@ from app.schemas.user import UserCreate, UserResponse, Token, SchoolAdminRegiste
 
 router = APIRouter()
 
+from typing import List
+
+@router.get("/schools", response_model=List[SchoolResponse])
+def get_schools(db: Session = Depends(deps.get_db)):
+    return db.query(School).all()
+
 @router.post("/register/school", response_model=UserResponse)
 def register_school_admin(payload: SchoolAdminRegisterRequest, db: Session = Depends(deps.get_db)):
     user_in = payload.admin

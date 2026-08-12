@@ -16,6 +16,7 @@ import StudentDashboard from './pages/StudentDashboard';
 import StudentCheckIn from './pages/StudentCheckIn';
 import ResourceHub from './pages/ResourceHub';
 import CounselorDashboard from './pages/CounselorDashboard';
+import UserSignup from './pages/UserSignup';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/get-started" element={<GetStarted />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/signup" element={<UserSignup />} />
             <Route 
               path="/admin/dashboard" 
               element={

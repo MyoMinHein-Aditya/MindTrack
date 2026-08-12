@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ArrowRight, Lock } from 'lucide-react';
 
@@ -91,6 +91,10 @@ export default function Login() {
           <p><strong>Demo Accounts:</strong> password is always <code>demo123</code></p>
           <p>• student@demo.com</p>
           <p>• counselor@demo.com</p>
+        </div>
+        
+        <div style={{ marginTop: '1.5rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+          Don't have an account? <Link to="/get-started" style={{ color: 'var(--accent-primary)', textDecoration: 'none', fontWeight: 500 }}>Sign up</Link>
         </div>
       </div>
     </div>

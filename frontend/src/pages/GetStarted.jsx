@@ -10,15 +10,15 @@ const GetStarted = () => {
   const options = [
     {
       title: 'Student',
-      description: 'Sign in to access your check-ins and dashboard.',
+      description: 'Sign up or sign in to access your check-ins and dashboard.',
       icon: <User size={32} color="var(--accent-primary)" />,
-      path: '/login',
+      path: '/signup?role=STUDENT',
     },
     {
       title: 'Counselor',
-      description: 'Sign in to monitor student well-being and insights.',
+      description: 'Sign up or sign in to monitor student well-being and insights.',
       icon: <Users size={32} color="var(--accent-primary)" />,
-      path: '/login',
+      path: '/signup?role=COUNSELOR',
     },
     {
       title: 'Administrator',
@@ -62,7 +62,7 @@ const GetStarted = () => {
                 <h2 style={styles.cardTitle}>{option.title}</h2>
                 <p style={styles.cardDescription}>{option.description}</p>
                 <div style={styles.cardAction}>
-                  {option.title === 'Administrator' ? 'Register School →' : 'Sign In →'}
+                  {option.title === 'Administrator' ? 'Register School →' : 'Sign Up →'}
                 </div>
               </div>
             ))}

@@ -64,6 +64,7 @@ class Student(Base):
     assessments = relationship("Assessment", back_populates="student")
     alerts = relationship("Alert", back_populates="student")
     interventions = relationship("InterventionAssignment", back_populates="student")
+    risk_events = relationship("RiskEvent", back_populates="student", cascade="all, delete-orphan")
 
 class Teacher(Base):
     __tablename__ = "teachers"

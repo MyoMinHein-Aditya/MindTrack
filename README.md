@@ -101,7 +101,6 @@ You can log into the prototype using the following synthetic accounts generated 
 | **Student** | `student@demo.com` | Show the Neomorphic Student Check-in flow. |
 | **Counselor** | `counselor@demo.com` | Show the Trend Engine alerts, Dashboard, and Intervention assignments. |
 | **Admin** | `admin@demo.com` | Show privacy-preserving school-wide analytics. |
-| **Teacher** | `teacher@demo.com` | Standard staff access. |
 
 ---
 

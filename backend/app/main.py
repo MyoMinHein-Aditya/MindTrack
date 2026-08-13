@@ -21,7 +21,7 @@ if settings.BACKEND_CORS_ORIGINS:
         allow_headers=["*"],
     )
 
-from app.api import auth, assessment, counselor, intervention, analytics
+from app.api import auth, assessment, counselor, intervention, analytics, admin
 from app.api.endpoints import checkins, chat, counselor_ops
 
 @app.get("/")
@@ -36,6 +36,7 @@ app.include_router(analytics.router, prefix="/api/analytics", tags=["analytics"]
 app.include_router(checkins.router, prefix="/api/checkins", tags=["checkins"])
 app.include_router(chat.router, prefix="/api/chat", tags=["chat"])
 app.include_router(counselor_ops.router, prefix="/api/counselor-ops", tags=["counselor_ops"])
+app.include_router(admin.router, prefix="/api/admin", tags=["admin"])
 
 
 

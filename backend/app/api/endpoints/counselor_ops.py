@@ -6,6 +6,7 @@ from app.api.deps import get_db, get_current_user
 from app.models.core import User, Student
 from app.models.risk_event import RiskEvent
 from app.schemas.risk_event import RiskEventResponse
+from app.services.counselor_service import counselor_service
 
 router = APIRouter()
 
@@ -18,8 +19,7 @@ def get_risk_events(
         raise HTTPException(status_code=403, detail="Not authorized")
     
     # Return active risk events (unresolved)
-    events = db.query(RiskEvent).filter(RiskEvent.resolved == False).order_by(RiskEvent.created_at.desc()).all()
-    return events
+    return counselor_service.get_unresolved_events(db)
 
 @router.post("/risk-events/{event_id}/resolve", response_model=RiskEventResponse)
 def resolve_risk_event(
@@ -30,12 +30,4 @@ def resolve_risk_event(
     if current_user.role.value not in ["COUNSELOR", "ADMIN"]:
         raise HTTPException(status_code=403, detail="Not authorized")
     
-    event = db.query(RiskEvent).filter(RiskEvent.id == event_id).first()
-    if not event:
-        raise HTTPException(status_code=404, detail="Risk event not found")
-        
-    event.resolved = True
-    event.resolved_at = datetime.now(timezone.utc)
-    db.commit()
-    db.refresh(event)
-    return event
+    return counselor_service.resolve_event(db, event_id)

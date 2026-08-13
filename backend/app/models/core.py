@@ -61,7 +61,16 @@ class Student(Base):
     streak_count = Column(Integer, default=0)
     points = Column(Integer, default=0)
     
+    # New Fields for Assessment & Segregation
+    assigned_counselor_id = Column(Integer, ForeignKey("counselors.id"), nullable=True)
+    risk_category = Column(Integer, default=1) # 1=No Counseling, 2=Needs Attention (Weekly), 3=Severe (Doctor)
+    parent_email = Column(String, nullable=True)
+    parent_phone = Column(String, nullable=True)
+    assessment_frequency = Column(String, default="MONTHLY") # MONTHLY or WEEKLY
+    next_assessment_date = Column(DateTime(timezone=True), nullable=True)
+    
     user = relationship("User", back_populates="student_profile")
+    assigned_counselor = relationship("Counselor", back_populates="students")
     school_class = relationship("Class", back_populates="students")
     assessments = relationship("Assessment", back_populates="student")
     alerts = relationship("Alert", back_populates="student")
@@ -83,3 +92,4 @@ class Counselor(Base):
     user_id = Column(Integer, ForeignKey("users.id"), unique=True)
 
     user = relationship("User", back_populates="counselor_profile")
+    students = relationship("Student", back_populates="assigned_counselor")

@@ -33,6 +33,11 @@ class StudentProfileBase(BaseModel):
     id: int
     streak_count: int = 0
     points: int = 0
+    risk_category: int = 1
+    assigned_counselor_id: Optional[int] = None
+    parent_email: Optional[str] = None
+    parent_phone: Optional[str] = None
+    assessment_frequency: str = "MONTHLY"
 
     class Config:
         from_attributes = True

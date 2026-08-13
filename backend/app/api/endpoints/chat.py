@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
-from app.services.ai_service import generate_chat_response, analyze_safety
+from app.services.ai_service import mindbridge_ai
 from app.models.core import User, Student
 from app.models.risk_event import RiskEvent
 from app.api.deps import get_current_user, get_db
@@ -34,7 +34,7 @@ def chat_with_mindbridge(
         raise HTTPException(status_code=400, detail="No user message provided")
 
     # Layer 1: Safety detection
-    safety_result = analyze_safety(latest_message)
+    safety_result = mindbridge_ai.analyze_safety(latest_message)
     
     if safety_result.get("is_crisis"):
         # Create a risk event for the student
@@ -63,6 +63,6 @@ def chat_with_mindbridge(
     
     messages_for_llm = [system_prompt] + [m.dict() for m in request.messages]
     
-    reply = generate_chat_response(messages_for_llm)
+    reply = mindbridge_ai.generate_chat_response(messages_for_llm)
     
     return ChatResponse(reply=reply, is_crisis=False)

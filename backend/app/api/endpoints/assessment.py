@@ -1,19 +1,18 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.api import deps
+from app.api.deps import get_db, get_current_user
 from app.models.core import User, Student
-from app.schemas.assessment import ActiveAssessmentResponse, AssessmentSubmitRequest, AssessmentReportResponse, AssessmentResponseItem
+from app.schemas.assessment import ActiveAssessmentResponse, AssessmentSubmitRequest, AssessmentReportResponse
 from app.services.assessment_service import assessment_service
 from app.services.notification_service import notification_service
 from app.services.student_service import student_service
-from typing import List
 
 router = APIRouter()
 
 @router.get("/active", response_model=ActiveAssessmentResponse)
 def get_active_assessment(
-    db: Session = Depends(deps.get_db),
-    current_user: User = Depends(deps.get_current_user)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
     if current_user.role.value != "STUDENT":
         raise HTTPException(status_code=403, detail="Only students can take assessments.")
@@ -33,8 +32,8 @@ def get_active_assessment(
 def submit_assessment(
     request: AssessmentSubmitRequest,
     assessment_id: int,
-    db: Session = Depends(deps.get_db),
-    current_user: User = Depends(deps.get_current_user)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
     if current_user.role.value != "STUDENT":
         raise HTTPException(status_code=403, detail="Only students can submit assessments.")
@@ -56,17 +55,3 @@ def submit_assessment(
         "category": assessment.assigned_category,
         "report": assessment.report_text
     }
-
-@router.get("/history/{student_id}", response_model=List[AssessmentResponseItem])
-def get_assessment_history(
-    student_id: int, 
-    db: Session = Depends(deps.get_db), 
-    current_user: User = Depends(deps.get_current_user)
-):
-    """Get history. Counselors can view assigned students. Students can only view themselves."""
-    from app.models.assessment import Assessment
-    if current_user.role.value == "STUDENT" and current_user.student_profile.id != student_id:
-         raise HTTPException(status_code=403, detail="Not authorized to view this data")
-    
-    history = db.query(Assessment).filter(Assessment.student_id == student_id).order_by(Assessment.created_at.desc()).all()
-    return history

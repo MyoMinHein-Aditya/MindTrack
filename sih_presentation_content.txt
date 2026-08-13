@@ -1,0 +1,66 @@
+======================================================
+SMART INDIA HACKATHON (SIH) PRESENTATION OUTLINE
+Project: MindTrack
+======================================================
+
+SLIDE 1: Title Slide
+------------------------------------------------------
+• Project Title: MindTrack - From Silent Struggle to Timely Support
+• Problem Statement: Development of a Digital Mental Health and Psychological Support System for Students in Higher Education
+• Team Name: [Your Team Name]
+• Submitting Members: [Your Names]
+• Tagline: A privacy-first platform bridging the gap between student distress and human-led support.
+
+SLIDE 2: The Problem
+------------------------------------------------------
+• The Issue: Students face immense academic, financial, and social pressure, leading to anxiety, burnout, and emotional distress.
+• The Gap: Students rarely seek help early. Current support models are entirely reactive (waiting for the student to walk into a counselor's office).
+• The Flaw in Existing Tech: One-time surveys miss longitudinal trends. Generic AI chatbots hallucinate or fail to handle crisis situations safely.
+
+SLIDE 3: Our Proposed Solution (MindTrack)
+------------------------------------------------------
+• What it is: An early-intervention digital wellbeing system designed exclusively for higher-education institutions.
+• How it works: 
+  1. Detects changing trajectories through weekly check-ins.
+  2. Provides immediate, safe AI-assisted first-line support.
+  3. Seamlessly escalates high-risk cases to qualified human counselors.
+• Core Philosophy: AI does not make clinical decisions. It serves as a supportive bridge to human professionals.
+
+SLIDE 4: Key Features (Student Experience)
+------------------------------------------------------
+• Longitudinal Check-ins: Weekly tracking of mood, stress, and sleep visualized via an interactive trend dashboard.
+• Gamification: Streak tracking (🔥) and Points (⭐) to incentivize continuous wellbeing monitoring and build healthy habits.
+• Resource Hub: 24/7 access to curated, evidence-based coping strategies and national Indian mental health helplines (e.g., Tele-MANAS).
+
+SLIDE 5: Key Features (Safety & AI Chat)
+------------------------------------------------------
+• MindBridge Chat: A conversational AI companion integrated globally across the application.
+• Two-Pass Safety Layer: 
+  - Pass 1: A deterministic safety classification layer evaluates every message in real-time.
+  - Pass 2: If a crisis (self-harm, severe distress) is detected, the AI executes an emergency protocol, provides helpline numbers, and immediately triggers a backend risk alert.
+
+SLIDE 6: Key Features (Counselor Operations)
+------------------------------------------------------
+• Role-Based Access Control: Secure, segregated dashboards for Students, Counselors, and Admins.
+• Triage & Priority Queue: Counselors receive real-time, explainable 'Risk Events' in their dashboard when a student triggers the AI safety layer.
+• Action-Oriented: Counselors can instantly see the highest-priority students, intervene, and mark alerts as resolved, closing the support loop.
+
+SLIDE 7: Technical Architecture & Tech Stack
+------------------------------------------------------
+• Frontend: React.js, Vite, React Router, Recharts (for data visualization), Lucide Icons, Framer Motion (animations).
+• Backend: FastAPI (Python), SQLAlchemy (ORM).
+• Database: SQLite (can be easily scaled to PostgreSQL).
+• AI Integration: Groq API (Llama 3 8B) for ultra-low latency, highly safe conversational generation.
+• Security: JWT-based authentication, strict RBAC (Role-Based Access Control), privacy-first data handling.
+
+SLIDE 8: Impact & Feasibility
+------------------------------------------------------
+• Scalability: Can be deployed across any university or college with isolated, secure workspaces for different schools.
+• Cost-Effective: Built using open-source tools and highly efficient APIs.
+• Real-world Impact: Reduces counselor burnout by automatically triaging cases, while ensuring no student falls through the cracks during a mental health crisis.
+
+SLIDE 9: Thank You / Q&A
+------------------------------------------------------
+• "Mental health is not a destination, but a process." 
+• Open the floor for questions from the judges.
+======================================================

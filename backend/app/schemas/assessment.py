@@ -31,3 +31,13 @@ class AssessmentReportResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class AssessmentResponseItem(BaseModel):
+    id: int
+    created_at: datetime
+    assigned_category: Optional[int] = None
+    report_text: Optional[str] = None
+    is_completed: bool
+
+    class Config:
+        from_attributes = True

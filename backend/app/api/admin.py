@@ -5,7 +5,7 @@ from typing import List, Dict, Any
 
 from app.api import deps
 from app.models.core import User, Student, Counselor
-from app.models.assessment import Assessment, WellbeingScore
+from app.models.assessment import Assessment
 
 router = APIRouter()
 
@@ -26,9 +26,9 @@ def get_admin_dashboard_data(
         latest_assessment = db.query(Assessment).filter(Assessment.student_id == student.id, Assessment.is_completed == True).order_by(Assessment.created_at.desc()).first()
         score = None
         risk = "Unknown"
-        if latest_assessment and latest_assessment.wellbeing_score:
-            score = latest_assessment.wellbeing_score.total_score
-            risk = latest_assessment.wellbeing_score.category_label
+        if latest_assessment and latest_assessment.assigned_category:
+            score = f"Level {latest_assessment.assigned_category}"
+            risk = "Low" if latest_assessment.assigned_category == 1 else "Moderate" if latest_assessment.assigned_category == 2 else "High"
             
         counselor_name = "Unassigned"
         if student.assigned_counselor_id:

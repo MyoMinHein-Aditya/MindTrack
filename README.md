@@ -16,7 +16,7 @@ This guide provides step-by-step instructions to run the MindTrack Smart India H
 
 ## Prerequisites
 Before you begin, ensure you have the following installed on your system:
-1. **Docker Desktop**: Required to run the PostgreSQL database container.
+1. **PostgreSQL**: A running local instance of PostgreSQL (port 5432).
 2. **Python 3.10+**: Required to run the FastAPI backend.
 3. **Node.js (v18+)**: Required to run the Vite/React frontend.
 
@@ -24,32 +24,21 @@ Before you begin, ensure you have the following installed on your system:
 
 ## 1. Environment Variables & API Keys
 
-MindTrack does not rely on external cloud APIs (like OpenAI) to ensure complete data privacy for student well-being. However, you need to set up the local environment variables.
+MindTrack uses the **Groq API** to power its dynamic mental health assessment and segregation logic.
 
 1. Navigate to the `backend` folder:
    ```bash
    cd backend
    ```
----
-
-## 2. Start the Database (PostgreSQL)
-
-MindTrack uses Docker to run a local PostgreSQL instance cleanly.
-
-1. Open a terminal in the root project directory:
-   ```bash
-   # Make sure you are in the root directory of the repository
+2. Make sure you edit your `.env` file (not `.env.example`) and add your API key along with the Postgres connection string:
+   ```env
+   DATABASE_URL="postgresql://postgres:postgres@localhost:5432/mindtrack"
+   GROQ_API_KEY="your_groq_api_key_here"
    ```
-2. Ensure Docker Desktop is open and running on your machine.
-3. Start the database container in the background:
-   ```bash
-   docker-compose up -d
-   ```
-   *(This will expose Postgres on port `5432` with the credentials matching your `.env` file).*
 
 ---
 
-## 3. Setup and Run the Backend (FastAPI)
+## 2. Setup and Run the Backend (FastAPI)
 
 1. Open a new terminal and navigate to the backend directory:
    ```bash
@@ -68,23 +57,24 @@ MindTrack uses Docker to run a local PostgreSQL instance cleanly.
    ```bash
    pip install -r requirements.txt
    ```
-4. **Seed the Database with Synthetic Data**:
-   Run the seed script. This will drop any existing tables, recreate the schema, and generate 50 synthetic students along with 5 weeks of historical assessment data for the demo story.
+4. **Initialize and Seed the Database**:
+   Run the database recreation script to apply the latest schemas (including the AI `DynamicQuestion` models), followed by the seed script.
    ```bash
-   python seed/generate.py
+   python recreate_db.py
+   python seed_demo.py
    ```
 5. Start the backend server:
    ```bash
-   fastapi dev app/main.py
+   uvicorn app.main:app --reload
    ```
    *The API will now be running at `http://localhost:8000`.*
    *You can view the auto-generated Swagger documentation at `http://localhost:8000/docs`.*
 
 ---
 
-## 4. Setup and Run the Frontend (React + Vite)
+## 3. Setup and Run the Frontend (React + Vite)
 
-1. Open a **third** terminal and navigate to the frontend directory:
+1. Open a **second** terminal and navigate to the frontend directory:
    ```bash
    cd frontend
    ```
